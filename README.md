@@ -1,6 +1,16 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# OmerDigital - Portfolio & Consulting Website
 
-## Getting Started
+A modern portfolio and consulting website built with Next.js 15, TypeScript, and Tailwind CSS.
+
+## 🚀 Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Development**: Turbopack for fast development builds
+- **Linting**: ESLint with Next.js configuration
+
+## 🛠️ Getting Started
 
 First, run the development server:
 
@@ -16,21 +26,37 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+You can start editing the page by modifying `src/app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📁 Project Structure
 
-## Learn More
+- `src/app/` - App Router pages and layouts
+- `src/components/` - Reusable React components  
+- `public/` - Static assets
+- `.github/` - GitHub configuration and workflows
 
-To learn more about Next.js, take a look at the following resources:
+## 🎨 Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Responsive design optimized for all devices
+- SEO-friendly with Next.js built-in optimizations
+- Fast development with Turbopack
+- Type-safe development with TypeScript
+- Modern styling with Tailwind CSS
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📚 Learn More
 
-## Deploy on Vercel
+To learn more about the technologies used:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API
+- [TypeScript Documentation](https://www.typescriptlang.org/docs/) - TypeScript language reference
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs) - utility-first CSS framework
+
+## 🚀 Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## 📄 License
+
+This project is for portfolio purposes.
