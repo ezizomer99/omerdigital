@@ -22,7 +22,7 @@ export default function Footer() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <h3 className="text-xl font-light tracking-wider mb-2">OMER DIGITAL</h3>
+            <h3 className="text-xl font-light tracking-wider mb-2">ØMERDIGITAL</h3>
             <p className="text-gray-400 text-sm">
               Digital Konsulent & Webutvikler
             </p>
@@ -36,7 +36,7 @@ export default function Footer() {
             transition={{ duration: 0.5, delay: 0.4 }}
           >
             <p className="text-gray-400 text-sm">
-              © {currentYear} Omer Digital. Alle rettigheter forbeholdt.
+              © {currentYear} ØmerDigital. Alle rettigheter forbeholdt.
             </p>
             <p className="text-gray-500 text-xs mt-1">
               Laget med ❤️ i Norge

@@ -175,7 +175,7 @@ Hvis du har hastende spørsmål, kan du også kontakte meg direkte på:
 - Telefon: +4748207684
 
 Med vennlig hilsen,
-Omer Digital
+Eziz Ømer - ØmerDigital
 Digital Konsulent & Webutvikler
         `
       });

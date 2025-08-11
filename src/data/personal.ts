@@ -14,7 +14,7 @@ export interface PersonalInfo {
 }
 
 export const personalInfo: PersonalInfo = {
-  name: "Omer Digital",
+  name: "ØmerDigital",
   title: "Digital Konsulent & Webutvikler",
   description: "Digital konsulent med lidenskap for å skape meningsfulle digitale opplevelser som driver forretningsvekst og brukerengasjement. Med ekspertise innen moderne webteknologier og strategisk digital transformasjon, hjelper jeg bedrifter å navigere det digitale landskapet og oppnå sine mål gjennom innovative løsninger og gjennomtenkt design.",
   email: "oemerdigital@gmail.com",

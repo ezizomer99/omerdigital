@@ -30,7 +30,7 @@ export default function Navigation() {
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <Link href="/" className="text-xl font-light tracking-wider text-gray-800 hover:text-gray-600 transition-colors">
-          OMER DIGITAL
+          ØMER DIGITAL
         </Link>
       </motion.div>
       
@@ -170,7 +170,7 @@ export default function Navigation() {
                 className="text-xl font-light tracking-wider text-gray-800"
                 onClick={closeMobileMenu}
               >
-                OMER DIGITAL
+                OMERDIGITAL
               </Link>
               <motion.button 
                 onClick={toggleMobileMenu}
