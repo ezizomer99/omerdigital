@@ -170,7 +170,7 @@ export default function Navigation() {
                 className="text-xl font-light tracking-wider text-gray-800"
                 onClick={closeMobileMenu}
               >
-                OMERDIGITAL
+                ØMER DIGITAL
               </Link>
               <motion.button 
                 onClick={toggleMobileMenu}

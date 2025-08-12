@@ -13,31 +13,23 @@ import {
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-amber-50">
+    <div className="min-h-screen bg-amber-50 relative overflow-hidden">
+      {/* Top Right Image Placeholder */}
+      <div className="absolute top-8 right-8 md:top-16 md:right-16 z-0">
+        <div className="w-32 h-48 md:w-48 md:h-72 lg:w-80 lg:h-[30rem] bg-gray-600 rounded-lg shadow-lg opacity-40 transform rotate-6">
+          <div className="w-full h-full flex items-center justify-center text-gray-300 text-xs md:text-sm">
+            Image Placeholder
+          </div>
+        </div>
+      </div>
+
       {/* Navigation */}
-      <Navigation />
+      <div className="relative z-50">
+        <Navigation />
+      </div>
       
       {/* Main Content */}
-      <main className="relative flex items-center justify-center min-h-[80vh] px-8 md:px-16">
-        {/* Left Image - Hidden on mobile */}
-        <FadeIn 
-          delay={0.1}
-          direction="left"
-          distance={100}
-          className="hidden lg:block absolute left-8 md:left-16 top-1/2 transform -translate-y-1/2 w-72 h-96 md:w-80 md:h-[500px]"
-        >
-          <HoverEffect scale={1.02} y={-5}>
-            <div className="w-full h-full bg-gray-900 rounded-sm overflow-hidden shadow-lg">
-              {/* Placeholder for left image - replace src with your actual image */}
-              <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center relative">
-                <FadeIn delay={0.6} className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white text-sm opacity-50">Portfolio Image</span>
-                </FadeIn>
-              </div>
-            </div>
-          </HoverEffect>
-        </FadeIn>
-
+      <main className="relative flex items-center justify-center min-h-[60vh] md:min-h-[70vh] px-8 md:px-16 z-10">
         {/* Center Content */}
         <FadeIn 
           delay={0}
@@ -75,29 +67,10 @@ export default function Home() {
             </FadeIn>
           </FadeIn>
         </FadeIn>
-
-        {/* Right Image - Hidden on mobile */}
-        <FadeIn 
-          delay={0.2}
-          direction="right"
-          distance={100}
-          className="hidden lg:block absolute right-8 md:right-16 top-1/2 transform -translate-y-1/2 w-72 h-96 md:w-80 md:h-[500px]"
-        >
-          <HoverEffect scale={1.02} y={-5}>
-            <div className="w-full h-full bg-gray-900 rounded-sm overflow-hidden shadow-lg">
-              {/* Placeholder for right image - replace src with your actual image */}
-              <div className="w-full h-full bg-gradient-to-bl from-gray-700 to-gray-900 flex items-center justify-center relative">
-                <FadeIn delay={0.8} className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-white text-sm opacity-50">Creative Work</span>
-                </FadeIn>
-              </div>
-            </div>
-          </HoverEffect>
-        </FadeIn>
       </main>
 
       {/* Bottom Section with CTA */}
-      <FadeIn delay={0.8} className="text-center pb-16 px-8">
+      <FadeIn delay={0.8} className="text-center pb-8 md:pb-16 px-8 relative z-10">
         <FadeIn delay={0.9} className="inline-flex items-center gap-4">
           <div className="w-8 h-px bg-gray-400"></div>
           <FadeIn delay={1.0} className="text-sm text-gray-500 uppercase tracking-wide">
@@ -111,6 +84,15 @@ export default function Home() {
           </AnimatedLink>
         </FadeIn>
       </FadeIn>
+
+      {/* Bottom Left Image Placeholder */}
+      <div className="absolute bottom-8 left-8 md:bottom-16 md:left-16 z-0">
+        <div className="w-40 h-60 md:w-56 md:h-84 lg:w-96 lg:h-[32rem] bg-gray-700 rounded-lg shadow-lg opacity-35 transform -rotate-6">
+          <div className="w-full h-full flex items-center justify-center text-gray-200 text-xs md:text-sm">
+            Image Placeholder
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

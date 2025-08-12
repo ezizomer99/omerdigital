@@ -16,7 +16,7 @@ export interface PersonalInfo {
 export const personalInfo: PersonalInfo = {
   name: "ØmerDigital",
   title: "Digital Konsulent & Webutvikler",
-  description: "Digital konsulent med lidenskap for å skape meningsfulle digitale opplevelser som driver forretningsvekst og brukerengasjement. Med ekspertise innen moderne webteknologier og strategisk digital transformasjon, hjelper jeg bedrifter å navigere det digitale landskapet og oppnå sine mål gjennom innovative løsninger og gjennomtenkt design.",
+  description: "Som webutvikler liker jeg å realisere ideer til bedrifter. Ellers jobber jeg til vanlig som utvikler/konsulent hos et konsulentselskap, noe som gir meg god erfaring med både tekniske løsninger og forretningsbehov. Jeg hjelper bedrifter med å bygge nettsider og webapplikasjoner som faktisk fungerer og gir verdi. Fra første møte til ferdig produkt sørger jeg for at prosjektet blir levert i tide og holder høy kvalitet.",
   email: "oemerdigital@gmail.com",
   phone: "+4748207684",
   location: "Kristiansand, Norge | Tilgjengelig for prosjekter over hele verden",

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Omer Digital - Portfolio & Consulting",
+  title: "Ømer Digital - Portfolio & Consulting",
   description: "Digital consultant specializing in modern web solutions and strategic digital transformation.",
 };
 

@@ -139,7 +139,7 @@ IP: ${ip}
       await transporter.sendMail({
         from: process.env.GMAIL_USER,
         to: email,
-        subject: 'Takk for din henvendelse - Omer Digital',
+        subject: 'Takk for din henvendelse - Ømer Digital',
         html: `
           <h2>Takk for din henvendelse!</h2>
           <p>Hei ${name},</p>
@@ -157,7 +157,7 @@ IP: ${ip}
           </ul>
           
           <p>Med vennlig hilsen,<br>
-          <strong>Omer Digital</strong><br>
+          <strong>Eziz Ømer - Ømer Digital</strong><br>
           Digital Konsulent & Webutvikler</p>
         `,
         text: `
