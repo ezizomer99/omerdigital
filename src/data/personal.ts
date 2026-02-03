@@ -3,28 +3,26 @@ export interface PersonalInfo {
   title: string;
   description: string;
   email: string;
-  phone: string;
   location: string;
   social: {
     linkedin?: string;
     twitter?: string;
     github?: string;
-    website?: string;
   };
 }
 
 export const personalInfo: PersonalInfo = {
   name: "ØmerDigital",
   title: "Digital Konsulent & Webutvikler",
-  description: "Som webutvikler liker jeg å realisere ideer til bedrifter. Ellers jobber jeg til vanlig som utvikler/konsulent hos et konsulentselskap, noe som gir meg god erfaring med både tekniske løsninger og forretningsbehov. Jeg hjelper bedrifter med å bygge nettsider og webapplikasjoner som faktisk fungerer og gir verdi. Fra første møte til ferdig produkt sørger jeg for at prosjektet blir levert i tide og holder høy kvalitet.",
+  description:
+    "Som webutvikler liker jeg å realisere ideer til bedrifter. Ellers jobber jeg til vanlig som utvikler/konsulent hos et konsulentselskap, noe som gir meg god erfaring med både tekniske løsninger og forretningsbehov. Jeg hjelper bedrifter med å bygge nettsider og webapplikasjoner som faktisk fungerer og gir verdi. Fra første møte til ferdig produkt sørger jeg for at prosjektet blir levert i tide og holder høy kvalitet.",
   email: "oemerdigital@gmail.com",
-  phone: "+4748207684",
-  location: "Kristiansand, Norge | Tilgjengelig for prosjekter over hele verden",
+  location:
+    "Kristiansand, Norge | Tilgjengelig for prosjekter over hele verden",
   social: {
     linkedin: "https://no.linkedin.com/in/ezizomer99",
     github: "https://github.com/ezizomer99",
-    website: "https://omerdigital.com"
-  }
+  },
 };
 
 export interface Testimonial {
@@ -43,7 +41,7 @@ export const testimonials: Testimonial[] = [
     company: "TechStart Inc.",
     position: "CEO",
     text: "Omer leverte en eksepsjonell webapplikasjon som overgikk våre forventninger. Hans tekniske ekspertise og oppmerksomhet på detaljer gjorde hele prosessen smidig.",
-    image: "/images/testimonial1.jpg"
+    image: "/images/testimonial1.jpg",
   },
   {
     id: 2,
@@ -51,7 +49,7 @@ export const testimonials: Testimonial[] = [
     company: "Growth Solutions",
     position: "CTO",
     text: "Den digitale strategikonsultasjonen fra Omer var uvurderlig. Vi så en 40% økning i brukerengasjement etter å ha implementert hans anbefalinger.",
-    image: "/images/testimonial2.jpg"
+    image: "/images/testimonial2.jpg",
   },
   {
     id: 3,
@@ -59,6 +57,6 @@ export const testimonials: Testimonial[] = [
     company: "Creative Agency",
     position: "Markedsdirektør",
     text: "Profesjonell, responsiv og leverer kvalitetsarbeid til rett tid. Omer er vår foretrukne utvikler for alle webprosjekter.",
-    image: "/images/testimonial3.jpg"
-  }
+    image: "/images/testimonial3.jpg",
+  },
 ];

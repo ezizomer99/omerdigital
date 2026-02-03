@@ -2,28 +2,31 @@
 
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import type { SxProps, Theme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 
 interface StaggerContainerProps {
   children: ReactNode;
   staggerDelay?: number;
   initialDelay?: number;
-  className?: string;
+  sx?: SxProps<Theme>;
 }
 
 export default function StaggerContainer({ 
   children, 
   initialDelay = 0,
-  className = '' 
+  sx
 }: Omit<StaggerContainerProps, 'staggerDelay'>) {
   return (
-    <motion.div
-      className={className}
+    <Box
+      component={motion.div}
+      sx={sx}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, delay: initialDelay }}
     >
       {children}
-    </motion.div>
+    </Box>
   );
 }
 
@@ -34,7 +37,7 @@ interface StaggerItemProps {
   staggerDelay?: number;
   direction?: 'up' | 'down' | 'left' | 'right';
   distance?: number;
-  className?: string;
+  sx?: SxProps<Theme>;
 }
 
 export function StaggerItem({ 
@@ -44,7 +47,7 @@ export function StaggerItem({
   staggerDelay = 0.1,
   direction = 'up',
   distance = 30,
-  className = '' 
+  sx
 }: StaggerItemProps) {
   const getInitialPosition = () => {
     switch (direction) {
@@ -75,13 +78,14 @@ export function StaggerItem({
   };
 
   return (
-    <motion.div
-      className={className}
+    <Box
+      component={motion.div}
+      sx={sx}
       initial={getInitialPosition()}
       animate={getAnimatePosition()}
       transition={{ duration: 0.5, delay: delay + (index * staggerDelay) }}
     >
       {children}
-    </motion.div>
+    </Box>
   );
 }

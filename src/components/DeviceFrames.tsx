@@ -1,19 +1,20 @@
 import React from 'react';
+import Box from '@mui/material/Box';
 
 interface DeviceFrameProps {
   children: React.ReactNode;
-  className?: string;
 }
 
 // Desktop/Laptop Frame
-export function DesktopFrame({ children, className = "" }: DeviceFrameProps) {
+export function DesktopFrame({ children }: DeviceFrameProps) {
   return (
-    <div className={`relative ${className}`}>
+    <Box sx={{ position: 'relative', width: '100%' }}>
       {/* Laptop SVG Frame */}
-      <svg 
-        viewBox="0 0 800 500" 
-        className="w-full h-auto"
-        fill="none" 
+      <Box
+        component="svg"
+        viewBox="0 0 800 500"
+        sx={{ width: '100%', height: 'auto' }}
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         {/* Laptop Screen */}
@@ -53,25 +54,36 @@ export function DesktopFrame({ children, className = "" }: DeviceFrameProps) {
           rx="4" 
           fill="#1f2937"
         />
-      </svg>
+      </Box>
       
       {/* Image Container */}
-      <div className="absolute top-[9%] left-[8.125%] w-[83.75%] h-[74%] rounded-lg overflow-hidden">
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '9%',
+          left: '8.125%',
+          width: '83.75%',
+          height: '74%',
+          borderRadius: 2,
+          overflow: 'hidden',
+        }}
+      >
         {children}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
 // Mobile Phone Frame
-export function MobileFrame({ children, className = "" }: DeviceFrameProps) {
+export function MobileFrame({ children }: DeviceFrameProps) {
   return (
-    <div className={`relative ${className}`}>
+    <Box sx={{ position: 'relative', maxWidth: '320px', mx: 'auto' }}>
       {/* Mobile Phone SVG Frame */}
-      <svg 
-        viewBox="0 0 300 600" 
-        className="w-full h-auto max-w-xs mx-auto"
-        fill="none" 
+      <Box
+        component="svg"
+        viewBox="0 0 300 600"
+        sx={{ width: '100%', height: 'auto' }}
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         {/* Phone Body */}
@@ -115,25 +127,36 @@ export function MobileFrame({ children, className = "" }: DeviceFrameProps) {
           rx="3" 
           fill="#374151"
         />
-      </svg>
+      </Box>
       
       {/* Image Container */}
-      <div className="absolute top-[10%] left-[11.67%] w-[76.67%] h-[80%] rounded-xl overflow-hidden">
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '10%',
+          left: '11.67%',
+          width: '76.67%',
+          height: '80%',
+          borderRadius: 3,
+          overflow: 'hidden',
+        }}
+      >
         {children}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 
 // Tablet Frame (optional)
-export function TabletFrame({ children, className = "" }: DeviceFrameProps) {
+export function TabletFrame({ children }: DeviceFrameProps) {
   return (
-    <div className={`relative ${className}`}>
+    <Box sx={{ position: 'relative', maxWidth: '448px', mx: 'auto' }}>
       {/* Tablet SVG Frame */}
-      <svg 
-        viewBox="0 0 500 700" 
-        className="w-full h-auto max-w-md mx-auto"
-        fill="none" 
+      <Box
+        component="svg"
+        viewBox="0 0 500 700"
+        sx={{ width: '100%', height: 'auto' }}
+        fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         {/* Tablet Body */}
@@ -165,12 +188,22 @@ export function TabletFrame({ children, className = "" }: DeviceFrameProps) {
           r="15" 
           fill="#374151"
         />
-      </svg>
+      </Box>
       
       {/* Image Container */}
-      <div className="absolute top-[10%] left-[10%] w-[80%] h-[80%] rounded-xl overflow-hidden">
+      <Box
+        sx={{
+          position: 'absolute',
+          top: '10%',
+          left: '10%',
+          width: '80%',
+          height: '80%',
+          borderRadius: 3,
+          overflow: 'hidden',
+        }}
+      >
         {children}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

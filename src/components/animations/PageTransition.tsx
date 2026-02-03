@@ -2,63 +2,68 @@
 
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import type { SxProps, Theme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 
 interface PageTransitionProps {
   children: ReactNode;
-  className?: string;
+  sx?: SxProps<Theme>;
 }
 
-export default function PageTransition({ children, className = '' }: PageTransitionProps) {
+export default function PageTransition({ children, sx }: PageTransitionProps) {
   return (
-    <motion.main
-      className={className}
+    <Box
+      component={motion.main}
+      sx={sx}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
     >
       {children}
-    </motion.main>
+    </Box>
   );
 }
 
 export function PageTitle({ 
   children, 
-  className = '',
+  sx,
   delay = 0.1 
 }: {
   children: ReactNode;
-  className?: string;
+  sx?: SxProps<Theme>;
   delay?: number;
 }) {
   return (
-    <motion.h1
-      className={className}
+    <Box
+      component={motion.div}
+      sx={sx}
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
     >
       {children}
-    </motion.h1>
+    </Box>
   );
 }
 
 export function PageDescription({ 
   children, 
-  className = '',
+  sx,
   delay = 0.2 
 }: {
   children: ReactNode;
-  className?: string;
+  sx?: SxProps<Theme>;
   delay?: number;
 }) {
   return (
-    <motion.div
-      className={className}
+    <Box
+      component={motion.div}
+      sx={sx}
       initial={{ opacity: 0, y: 15 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay }}
     >
       {children}
-    </motion.div>
+    </Box>
   );
 }

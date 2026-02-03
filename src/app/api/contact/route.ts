@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from 'next/server';
-import nodemailer from 'nodemailer';
+import { NextRequest, NextResponse } from "next/server";
+import nodemailer from "nodemailer";
 
 // Create Gmail transporter
 const transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: "gmail",
   auth: {
     user: process.env.GMAIL_USER,
     pass: process.env.GMAIL_APP_PASSWORD,
@@ -19,12 +19,14 @@ function rateLimit(ip: string): boolean {
   const maxRequests = 3; // Max 3 submissions per 15 minutes per IP
 
   const requestLog = rateLimitMap.get(ip) || [];
-  const requestsInWindow = requestLog.filter((timestamp: number) => now - timestamp < timeWindow);
-  
+  const requestsInWindow = requestLog.filter(
+    (timestamp: number) => now - timestamp < timeWindow,
+  );
+
   if (requestsInWindow.length >= maxRequests) {
     return false;
   }
-  
+
   requestsInWindow.push(now);
   rateLimitMap.set(ip, requestsInWindow);
   return true;
@@ -33,29 +35,30 @@ function rateLimit(ip: string): boolean {
 export async function POST(request: NextRequest) {
   try {
     // Get client IP for rate limiting
-    const ip = request.headers.get('x-forwarded-for') || 
-               request.headers.get('x-real-ip') || 
-               'unknown';
+    const ip =
+      request.headers.get("x-forwarded-for") ||
+      request.headers.get("x-real-ip") ||
+      "unknown";
 
     // Check rate limit
     if (!rateLimit(ip)) {
       return NextResponse.json(
-        { error: 'For mange forespørsler. Prøv igjen senere.' },
-        { status: 429 }
+        { error: "For mange forespørsler. Prøv igjen senere." },
+        { status: 429 },
       );
     }
 
     const formData = await request.formData();
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const projectType = formData.get('project-type') as string;
-    const message = formData.get('message') as string;
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const projectType = formData.get("project-type") as string;
+    const message = formData.get("message") as string;
 
     // Basic validation
     if (!name || !email || !message) {
       return NextResponse.json(
-        { error: 'Navn, e-post og melding er påkrevd.' },
-        { status: 400 }
+        { error: "Navn, e-post og melding er påkrevd." },
+        { status: 400 },
       );
     }
 
@@ -63,8 +66,8 @@ export async function POST(request: NextRequest) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: 'Ugyldig e-postadresse.' },
-        { status: 400 }
+        { error: "Ugyldig e-postadresse." },
+        { status: 400 },
       );
     }
 
@@ -75,26 +78,26 @@ export async function POST(request: NextRequest) {
       /lottery/i,
       /\$\$\$/,
       /urgent.*money/i,
-      /click.*here.*now/i
+      /click.*here.*now/i,
     ];
-    
+
     const fullText = `${name} ${email} ${message}`.toLowerCase();
-    if (suspiciousPatterns.some(pattern => pattern.test(fullText))) {
+    if (suspiciousPatterns.some((pattern) => pattern.test(fullText))) {
       return NextResponse.json(
-        { error: 'Melding blokkert som spam.' },
-        { status: 400 }
+        { error: "Melding blokkert som spam." },
+        { status: 400 },
       );
     }
 
     // Here you would normally send the email
     // For now, just log it (in production, use a proper email service)
-    console.log('New contact form submission:', {
+    console.log("New contact form submission:", {
       name,
       email,
       projectType,
       message,
       timestamp: new Date().toISOString(),
-      ip
+      ip,
     });
 
     // Send email via Gmail SMTP
@@ -103,19 +106,19 @@ export async function POST(request: NextRequest) {
         from: process.env.GMAIL_USER,
         to: process.env.GMAIL_USER, // Send to your own email
         replyTo: email, // Set reply-to as the form submitter
-        subject: `Ny henvendelse fra ${name} - ${projectType || 'Generell forespørsel'}`,
+        subject: `Ny henvendelse fra ${name} - ${projectType || "Generell forespørsel"}`,
         html: `
           <h2>Ny kontakthenvendelse fra omerdigital.com</h2>
           <p><strong>Navn:</strong> ${name}</p>
           <p><strong>E-post:</strong> ${email}</p>
-          <p><strong>Prosjekttype:</strong> ${projectType || 'Ikke spesifisert'}</p>
+          <p><strong>Prosjekttype:</strong> ${projectType || "Ikke spesifisert"}</p>
           <p><strong>Melding:</strong></p>
           <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
-            ${message.replace(/\n/g, '<br>')}
+            ${message.replace(/\n/g, "<br>")}
           </div>
           <hr>
           <p style="color: #666; font-size: 12px;">
-            Sendt: ${new Date().toLocaleString('no-NO')}<br>
+            Sendt: ${new Date().toLocaleString("no-NO")}<br>
             IP: ${ip}
           </p>
         `,
@@ -124,22 +127,22 @@ Ny kontakthenvendelse fra omerdigital.com
 
 Navn: ${name}
 E-post: ${email}
-Prosjekttype: ${projectType || 'Ikke spesifisert'}
+Prosjekttype: ${projectType || "Ikke spesifisert"}
 
 Melding:
 ${message}
 
 ---
-Sendt: ${new Date().toLocaleString('no-NO')}
+Sendt: ${new Date().toLocaleString("no-NO")}
 IP: ${ip}
-        `
+        `,
       });
 
       // Send confirmation email to the user
       await transporter.sendMail({
         from: process.env.GMAIL_USER,
         to: email,
-        subject: 'Takk for din henvendelse - Ømer Digital',
+        subject: "Takk for din henvendelse - Ømer Digital",
         html: `
           <h2>Takk for din henvendelse!</h2>
           <p>Hei ${name},</p>
@@ -147,13 +150,12 @@ IP: ${ip}
           
           <h3>Din melding:</h3>
           <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
-            ${message.replace(/\n/g, '<br>')}
+            ${message.replace(/\n/g, "<br>")}
           </div>
           
           <p>Hvis du har hastende spørsmål, kan du også kontakte meg direkte på:</p>
           <ul>
             <li>E-post: oemerdigital@gmail.com</li>
-            <li>Telefon: +4748207684</li>
           </ul>
           
           <p>Med vennlig hilsen,<br>
@@ -172,16 +174,14 @@ ${message}
 
 Hvis du har hastende spørsmål, kan du også kontakte meg direkte på:
 - E-post: oemerdigital@gmail.com  
-- Telefon: +4748207684
 
 Med vennlig hilsen,
 Eziz Ømer - ØmerDigital
 Digital Konsulent & Webutvikler
-        `
+        `,
       });
-
     } catch (emailError) {
-      console.error('Email sending failed:', emailError);
+      console.error("Email sending failed:", emailError);
       // Still return success to user, but log the email error
       // You might want to implement a fallback notification system
     }
@@ -194,15 +194,14 @@ Digital Konsulent & Webutvikler
     // - AWS SES
 
     return NextResponse.json(
-      { success: true, message: 'Melding sendt! Jeg vil svare snart.' },
-      { status: 200 }
+      { success: true, message: "Melding sendt! Jeg vil svare snart." },
+      { status: 200 },
     );
-
   } catch (error) {
-    console.error('Contact form error:', error);
+    console.error("Contact form error:", error);
     return NextResponse.json(
-      { error: 'Noe gikk galt. Prøv igjen senere.' },
-      { status: 500 }
+      { error: "Noe gikk galt. Prøv igjen senere." },
+      { status: 500 },
     );
   }
 }

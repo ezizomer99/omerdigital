@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import type { SxProps, Theme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
 
 interface AnimatedInputProps {
   type?: string;
@@ -9,10 +11,13 @@ interface AnimatedInputProps {
   name?: string;
   required?: boolean;
   placeholder?: string;
+  label?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  className?: string;
+  sx?: SxProps<Theme>;
 }
+
+const MotionTextField = motion.create(TextField);
 
 export default function AnimatedInput({ 
   type = 'text',
@@ -20,21 +25,33 @@ export default function AnimatedInput({
   name,
   required = false,
   placeholder,
+  label,
   value,
   onChange,
-  className = ''
+  sx
 }: AnimatedInputProps) {
   return (
-    <motion.input
+    <MotionTextField
       type={type}
       id={id}
       name={name}
       required={required}
       placeholder={placeholder}
+      label={label}
       value={value}
       onChange={onChange}
-      className={`w-full px-4 py-3 bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-gray-400 transition-colors placeholder:text-gray-500 text-gray-800 ${className}`}
-      whileFocus={{ scale: 1.02, borderColor: "#374151" }}
+      fullWidth
+      variant="outlined"
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          bgcolor: 'white',
+          '& fieldset': { borderColor: 'grey.200' },
+          '&:hover fieldset': { borderColor: 'grey.400' },
+          '&.Mui-focused fieldset': { borderColor: 'grey.500' },
+        },
+        ...sx,
+      }}
+      whileFocus={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
     />
   );
@@ -45,31 +62,45 @@ export function AnimatedTextarea({
   name,
   required = false,
   placeholder,
+  label,
   rows = 5,
   value,
   onChange,
-  className = ''
+  sx
 }: {
   id?: string;
   name?: string;
   required?: boolean;
   placeholder?: string;
+  label?: string;
   rows?: number;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  className?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  sx?: SxProps<Theme>;
 }) {
   return (
-    <motion.textarea
+    <MotionTextField
       id={id}
       name={name}
       required={required}
       placeholder={placeholder}
+      label={label}
+      multiline
       rows={rows}
       value={value}
       onChange={onChange}
-      className={`w-full px-4 py-3 bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-gray-400 transition-colors resize-none placeholder:text-gray-500 text-gray-800 ${className}`}
-      whileFocus={{ scale: 1.02, borderColor: "#374151" }}
+      fullWidth
+      variant="outlined"
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          bgcolor: 'white',
+          '& fieldset': { borderColor: 'grey.200' },
+          '&:hover fieldset': { borderColor: 'grey.400' },
+          '&.Mui-focused fieldset': { borderColor: 'grey.500' },
+        },
+        ...sx,
+      }}
+      whileFocus={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
     />
   );
@@ -78,29 +109,43 @@ export function AnimatedTextarea({
 export function AnimatedSelect({ 
   id,
   name,
+  label,
   children,
   value,
   onChange,
-  className = ''
+  sx
 }: {
   id?: string;
   name?: string;
+  label?: string;
   children: ReactNode;
   value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  className?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  sx?: SxProps<Theme>;
 }) {
   return (
-    <motion.select
+    <MotionTextField
       id={id}
       name={name}
+      select
+      label={label}
       value={value}
       onChange={onChange}
-      className={`w-full px-4 py-3 bg-white border border-gray-200 rounded-sm focus:outline-none focus:border-gray-400 transition-colors text-gray-700 ${className}`}
-      whileFocus={{ scale: 1.02, borderColor: "#374151" }}
+      fullWidth
+      variant="outlined"
+      sx={{
+        '& .MuiOutlinedInput-root': {
+          bgcolor: 'white',
+          '& fieldset': { borderColor: 'grey.200' },
+          '&:hover fieldset': { borderColor: 'grey.400' },
+          '&.Mui-focused fieldset': { borderColor: 'grey.500' },
+        },
+        ...sx,
+      }}
+      whileFocus={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
     >
       {children}
-    </motion.select>
+    </MotionTextField>
   );
 }

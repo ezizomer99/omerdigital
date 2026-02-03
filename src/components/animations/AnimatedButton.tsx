@@ -2,52 +2,74 @@
 
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import type { SxProps, Theme } from '@mui/material/styles';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 
 interface AnimatedButtonProps {
   children: ReactNode;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
   disabled?: boolean;
-  className?: string;
+  sx?: SxProps<Theme>;
   variant?: 'primary' | 'secondary';
 }
+
+const MotionButton = motion.create(Button);
 
 export default function AnimatedButton({ 
   children, 
   onClick, 
   type = 'button',
   disabled = false,
-  className = '',
+  sx,
   variant = 'primary'
 }: AnimatedButtonProps) {
-  const baseClasses = variant === 'primary' 
-    ? 'bg-gray-900 text-white hover:bg-gray-800' 
-    : 'bg-white text-gray-900 border border-gray-300 hover:bg-gray-50';
-
   return (
-    <motion.button
+    <MotionButton
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`px-6 py-3 text-sm tracking-wide transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${baseClasses} ${className}`}
+      variant={variant === 'primary' ? 'contained' : 'outlined'}
+      sx={{
+        px: 3,
+        py: 1.5,
+        fontSize: '0.875rem',
+        letterSpacing: '0.05em',
+        textTransform: 'none',
+        ...(variant === 'primary' ? {
+          bgcolor: 'grey.900',
+          color: 'white',
+          '&:hover': { bgcolor: 'grey.800' },
+        } : {
+          bgcolor: 'white',
+          color: 'grey.900',
+          borderColor: 'grey.300',
+          '&:hover': { bgcolor: 'grey.50', borderColor: 'grey.400' },
+        }),
+        '&:disabled': { opacity: 0.5, cursor: 'not-allowed' },
+        ...sx,
+      }}
       whileHover={{ scale: 1.02, y: -2 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.2 }}
     >
       {children}
-    </motion.button>
+    </MotionButton>
   );
 }
+
+const MotionLink = motion.create(Link);
 
 export function AnimatedLink({ 
   children, 
   href, 
-  className = '',
+  sx,
   external = false 
 }: {
   children: ReactNode;
   href: string;
-  className?: string;
+  sx?: SxProps<Theme>;
   external?: boolean;
 }) {
   const linkProps = external 
@@ -55,14 +77,15 @@ export function AnimatedLink({
     : {};
 
   return (
-    <motion.a
+    <MotionLink
       href={href}
-      className={`transition-colors ${className}`}
+      underline="none"
+      sx={{ display: 'inline-block', ...sx }}
       whileHover={{ scale: 1.02 }}
       transition={{ duration: 0.2 }}
       {...linkProps}
     >
       {children}
-    </motion.a>
+    </MotionLink>
   );
 }

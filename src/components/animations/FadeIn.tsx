@@ -2,6 +2,8 @@
 
 import { motion } from 'framer-motion';
 import { ReactNode } from 'react';
+import type { SxProps, Theme } from '@mui/material/styles';
+import Box from '@mui/material/Box';
 
 interface FadeInProps {
   children: ReactNode;
@@ -9,7 +11,7 @@ interface FadeInProps {
   duration?: number;
   direction?: 'up' | 'down' | 'left' | 'right' | 'none';
   distance?: number;
-  className?: string;
+  sx?: SxProps<Theme>;
 }
 
 export default function FadeIn({ 
@@ -18,7 +20,7 @@ export default function FadeIn({
   duration = 0.4, 
   direction = 'up',
   distance = 20,
-  className = '' 
+  sx
 }: FadeInProps) {
   const getInitialPosition = () => {
     switch (direction) {
@@ -53,13 +55,14 @@ export default function FadeIn({
   };
 
   return (
-    <motion.div
-      className={className}
+    <Box
+      component={motion.div}
+      sx={sx}
       initial={getInitialPosition()}
       animate={getAnimatePosition()}
       transition={{ duration, delay }}
     >
       {children}
-    </motion.div>
+    </Box>
   );
 }

@@ -11,71 +11,121 @@ import {
   ServiceCard,
   HoverEffect
 } from "@/components/animations";
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
+import Stack from '@mui/material/Stack';
 
 export default function About() {
   return (
-    <div className="min-h-screen bg-amber-50">
+    <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
       <Navigation />
       
-      <PageTransition className="px-8 md:px-16 py-16">
-        <div className="max-w-4xl mx-auto">
-          <PageTitle 
-            className="text-4xl md:text-5xl font-light tracking-wider text-gray-800 mb-8 text-center"
-            delay={0.1}
-          >
-            OM MEG
+      <PageTransition>
+        <Container maxWidth="md" sx={{ pt: { xs: 14, md: 16 }, pb: 8 }}>
+          <PageTitle delay={0.1}>
+            <Typography
+              variant="h2"
+              sx={{
+                fontSize: { xs: '2rem', md: '2.5rem' },
+                fontWeight: 300,
+                letterSpacing: '0.1em',
+                color: 'text.primary',
+                mb: 4,
+                textAlign: 'center',
+              }}
+            >
+              OM MEG
+            </Typography>
           </PageTitle>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+          <Grid container spacing={8} alignItems="center" sx={{ mb: 8 }}>
             {/* Text Content */}
-            <FadeIn 
-              delay={0.2}
-              direction="left"
-              distance={50}
-              className="space-y-6"
-            >
-              <FadeIn delay={0.3} direction="up" className="text-lg text-gray-600 font-light leading-relaxed">
-                <p>{personalInfo.description}</p>
+            <Grid size={{ xs: 12, lg: 6 }}>
+              <FadeIn delay={0.2} direction="left" distance={50}>
+                <Stack spacing={3}>
+                  <FadeIn delay={0.3} direction="up">
+                    <Typography
+                      variant="body1"
+                      sx={{
+                        fontSize: '1.125rem',
+                        color: 'text.secondary',
+                        fontWeight: 300,
+                        lineHeight: 1.75,
+                      }}
+                    >
+                      {personalInfo.description}
+                    </Typography>
+                  </FadeIn>
+                  
+                  <FadeIn delay={0.4}>
+                    <Box>
+                      <Typography
+                        variant="h5"
+                        sx={{ fontWeight: 300, color: 'text.primary', mb: 2 }}
+                      >
+                        Tjenester som tilbys
+                      </Typography>
+                      <Stack spacing={2}>
+                        {services.map((service, index) => (
+                          <ServiceCard key={service.id} delay={0.5 + (index * 0.05)}>
+                            <Box
+                              sx={{
+                                bgcolor: 'background.paper',
+                                p: 2,
+                                borderRadius: 1,
+                                boxShadow: 1,
+                              }}
+                            >
+                              <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1 }}>
+                                <Typography variant="h6" component="span">{service.icon}</Typography>
+                                <Typography sx={{ fontWeight: 300, color: 'text.primary' }}>
+                                  {service.name}
+                                </Typography>
+                              </Stack>
+                              <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                                {service.description}
+                              </Typography>
+                            </Box>
+                          </ServiceCard>
+                        ))}
+                      </Stack>
+                    </Box>
+                  </FadeIn>
+                </Stack>
               </FadeIn>
-              
-              <FadeIn delay={0.4} className="space-y-4">
-                <h3 className="text-xl font-light text-gray-800">Tjenester som tilbys</h3>
-                <div className="space-y-3">
-                  {services.map((service, index) => (
-                    <ServiceCard key={service.id} delay={0.5 + (index * 0.05)}>
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-2xl">{service.icon}</span>
-                        <h4 className="font-light text-gray-800">{service.name}</h4>
-                      </div>
-                      <p className="text-sm text-gray-600">{service.description}</p>
-                    </ServiceCard>
-                  ))}
-                </div>
-              </FadeIn>
-            </FadeIn>
+            </Grid>
 
             {/* Image */}
-            <FadeIn 
-              delay={0.3}
-              direction="right"
-              distance={50}
-              className="w-full"
-            >
-              <HoverEffect scale={1.02} y={-5} className="w-full h-96 bg-gray-900 rounded-sm overflow-hidden shadow-lg">
-                <div className="w-full h-full relative">
-                  <Image
-                    src="/me/profilepic.jpg"
-                    alt="Omer Digital - Profile Picture"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                </div>
-              </HoverEffect>
-            </FadeIn>
-          </div>
-        </div>
+            <Grid size={{ xs: 12, lg: 6 }}>
+              <FadeIn delay={0.3} direction="right" distance={50}>
+                <HoverEffect scale={1.02} y={-5}>
+                  <Box
+                    sx={{
+                      width: '100%',
+                      height: 384,
+                      bgcolor: 'primary.dark',
+                      borderRadius: 0.5,
+                      overflow: 'hidden',
+                      boxShadow: 3,
+                      position: 'relative',
+                    }}
+                  >
+                    <Image
+                      src="/me/profilepic.jpg"
+                      alt="Omer Digital - Profile Picture"
+                      fill
+                      style={{ objectFit: 'cover' }}
+                      priority
+                    />
+                  </Box>
+                </HoverEffect>
+              </FadeIn>
+            </Grid>
+          </Grid>
+        </Container>
       </PageTransition>
-    </div>
+    </Box>
   );
 }
