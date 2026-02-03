@@ -1,6 +1,5 @@
 'use client';
 
-import Navigation from "@/components/Navigation";
 import { personalInfo } from "@/data/personal";
 import { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -69,21 +68,19 @@ export default function Contact() {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <Navigation />
-      
       <Box
         component={motion.main}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.15 }}
         sx={{ pt: { xs: 14, md: 16 }, pb: 8 }}
       >
         <Container maxWidth="md">
           <Box
             component={motion.div}
-            initial={{ opacity: 0, y: -30 }}
+            initial={{ opacity: 0, y: -15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.25, delay: 0.05 }}
           >
             <Typography
               variant="h2"
@@ -102,9 +99,9 @@ export default function Contact() {
           
           <Box
             component={motion.div}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.25, delay: 0.1 }}
             sx={{ textAlign: 'center', mb: 8 }}
           >
             <Typography
@@ -127,17 +124,17 @@ export default function Contact() {
             <Grid size={{ xs: 12, lg: 6 }}>
               <Box
                 component={motion.div}
-                initial={{ opacity: 0, x: -50 }}
+                initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
+                transition={{ duration: 0.25, delay: 0.15 }}
               >
                 <form onSubmit={handleSubmit}>
                   <Stack spacing={3}>
                     <Box
                       component={motion.div}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.8 }}
+                      transition={{ duration: 0.2, delay: 0.2 }}
                     >
                       <TextField
                         fullWidth
@@ -153,9 +150,9 @@ export default function Contact() {
                     
                     <Box
                       component={motion.div}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 0.9 }}
+                      transition={{ duration: 0.2, delay: 0.25 }}
                     >
                       <TextField
                         fullWidth
@@ -172,9 +169,9 @@ export default function Contact() {
                     
                     <Box
                       component={motion.div}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 1.0 }}
+                      transition={{ duration: 0.2, delay: 0.3 }}
                     >
                       <TextField
                         fullWidth
@@ -196,9 +193,9 @@ export default function Contact() {
                     
                     <Box
                       component={motion.div}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 1.1 }}
+                      transition={{ duration: 0.2, delay: 0.35 }}
                     >
                       <TextField
                         fullWidth
@@ -216,9 +213,9 @@ export default function Contact() {
                     
                     <Box
                       component={motion.div}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.4, delay: 1.2 }}
+                      transition={{ duration: 0.2, delay: 0.4 }}
                     >
                       <Button
                         type="submit"
@@ -274,16 +271,16 @@ export default function Contact() {
             <Grid size={{ xs: 12, lg: 6 }}>
               <Box
                 component={motion.div}
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
+                transition={{ duration: 0.25, delay: 0.15 }}
               >
                 <Stack spacing={4}>
                   <Box
                     component={motion.div}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 1 }}
+                    transition={{ duration: 0.2, delay: 0.2 }}
                   >
                     <Typography variant="h5" sx={{ fontWeight: 300, color: 'text.primary', mb: 2 }}>
                       Ta kontakt
@@ -304,9 +301,9 @@ export default function Contact() {
                   
                   <Box
                     component={motion.div}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 1.4 }}
+                    transition={{ duration: 0.2, delay: 0.25 }}
                   >
                     <Typography variant="h5" sx={{ fontWeight: 300, color: 'text.primary', mb: 2 }}>
                       Responstid
@@ -319,9 +316,9 @@ export default function Contact() {
                   
                   <Box
                     component={motion.div}
-                    initial={{ opacity: 0, y: 20 }}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 1.6 }}
+                    transition={{ duration: 0.2, delay: 0.3 }}
                   >
                     <Typography variant="h5" sx={{ fontWeight: 300, color: 'text.primary', mb: 2 }}>
                       Sosiale medier

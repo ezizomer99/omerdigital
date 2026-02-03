@@ -17,7 +17,7 @@ export default function PageTransition({ children, sx }: PageTransitionProps) {
       sx={sx}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      transition={{ duration: 0.4 }}
+      transition={{ duration: 0.15 }}
     >
       {children}
     </Box>
@@ -25,6 +25,28 @@ export default function PageTransition({ children, sx }: PageTransitionProps) {
 }
 
 export function PageTitle({ 
+  children, 
+  sx,
+  delay = 0.05 
+}: {
+  children: ReactNode;
+  sx?: SxProps<Theme>;
+  delay?: number;
+}) {
+  return (
+    <Box
+      component={motion.div}
+      sx={sx}
+      initial={{ opacity: 0, y: -15 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.25, delay }}
+    >
+      {children}
+    </Box>
+  );
+}
+
+export function PageDescription({ 
   children, 
   sx,
   delay = 0.1 
@@ -37,31 +59,9 @@ export function PageTitle({
     <Box
       component={motion.div}
       sx={sx}
-      initial={{ opacity: 0, y: -20 }}
+      initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay }}
-    >
-      {children}
-    </Box>
-  );
-}
-
-export function PageDescription({ 
-  children, 
-  sx,
-  delay = 0.2 
-}: {
-  children: ReactNode;
-  sx?: SxProps<Theme>;
-  delay?: number;
-}) {
-  return (
-    <Box
-      component={motion.div}
-      sx={sx}
-      initial={{ opacity: 0, y: 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.4, delay }}
+      transition={{ duration: 0.25, delay }}
     >
       {children}
     </Box>

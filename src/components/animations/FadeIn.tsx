@@ -17,9 +17,9 @@ interface FadeInProps {
 export default function FadeIn({ 
   children, 
   delay = 0, 
-  duration = 0.4, 
+  duration = 0.25, 
   direction = 'up',
-  distance = 20,
+  distance = 15,
   sx
 }: FadeInProps) {
   const getInitialPosition = () => {

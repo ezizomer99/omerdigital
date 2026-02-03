@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { LinkedInIcon, GitHubIcon } from './SocialIcons';
 import { personalInfo } from '@/data/personal';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
@@ -16,11 +17,16 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
+    // Check initial scroll position
+    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -33,9 +39,9 @@ export default function Navigation() {
     setIsMobileMenuOpen(false);
   };
 
-  const navLinkSx = {
-    color: 'text.primary',
-    fontWeight: 400,
+  const getNavLinkSx = (isActive: boolean) => ({
+    color: isActive ? 'primary.dark' : 'text.primary',
+    fontWeight: isActive ? 500 : 400,
     letterSpacing: '0.08em',
     fontSize: '0.8rem',
     textDecoration: 'none',
@@ -46,7 +52,7 @@ export default function Navigation() {
       position: 'absolute',
       bottom: 0,
       left: 0,
-      width: '0%',
+      width: isActive ? '100%' : '0%',
       height: '2px',
       bgcolor: 'primary.main',
       transition: 'width 0.3s ease',
@@ -54,7 +60,7 @@ export default function Navigation() {
     '&:hover::after': {
       width: '100%',
     },
-  };
+  });
 
   const socialIconSx = {
     color: 'text.secondary',
@@ -65,12 +71,12 @@ export default function Navigation() {
     },
   };
 
+  // Only apply scroll effects after mounting to prevent hydration mismatch
+  const isScrolled = mounted && scrolled;
+
   return (
     <Box
-      component={motion.nav}
-      initial={{ opacity: 0, y: -50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
+      component="nav"
       sx={{
         position: 'fixed',
         top: 0,
@@ -81,43 +87,41 @@ export default function Navigation() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        py: scrolled ? 2 : 3,
+        py: isScrolled ? 2 : 3,
         px: { xs: 2, md: 6 },
-        bgcolor: scrolled ? 'rgba(249, 248, 246, 0.95)' : 'transparent',
-        backdropFilter: scrolled ? 'blur(10px)' : 'none',
-        borderBottom: scrolled ? '1px solid' : 'none',
+        bgcolor: isScrolled ? 'rgba(249, 248, 246, 0.95)' : 'transparent',
+        backdropFilter: isScrolled ? 'blur(10px)' : 'none',
+        borderBottom: isScrolled ? '1px solid' : 'none',
         borderColor: 'rgba(201, 181, 156, 0.2)',
         transition: 'all 0.3s ease',
       }}
     >
       {/* Logo with Image */}
-      <Box
-        component={motion.div}
-        initial={{ opacity: 0, x: -30 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
-      >
+      <Box>
         <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '12px' }}>
           <Box
             component={motion.div}
             whileHover={{ scale: 1.05, rotate: 5 }}
             whileTap={{ scale: 0.95 }}
             sx={{
-              width: 42,
-              height: 42,
+              width: 52,
+              height: 52,
               borderRadius: '50%',
               overflow: 'hidden',
               border: '2px solid',
               borderColor: 'primary.main',
               boxShadow: '0 4px 12px rgba(201, 181, 156, 0.3)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
             <Image
               src="/me/logo.png"
               alt="Ømer Digital Logo"
-              width={42}
-              height={42}
-              style={{ objectFit: 'cover' }}
+              width={52}
+              height={52}
+              style={{ objectFit: 'cover', width: '100%', height: '100%' }}
             />
           </Box>
           <Typography
@@ -144,21 +148,17 @@ export default function Navigation() {
         alignItems="center"
         sx={{ display: { xs: 'none', sm: 'flex' } }}
       >
-        <Box
-          component={motion.div}
-          initial={{ opacity: 0, x: 30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
+        <Box>
           <Stack 
             direction="row" 
             spacing={1}
             sx={{
-              bgcolor: 'rgba(239, 233, 227, 0.6)',
+              bgcolor: 'rgba(239, 233, 227, 0.85)',
               borderRadius: '50px',
               px: 2,
               py: 1,
               backdropFilter: 'blur(5px)',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.05)',
             }}
           >
             {[
@@ -166,39 +166,36 @@ export default function Navigation() {
               { href: '/work', label: 'ARBEID' },
               { href: '/about', label: 'OM MEG' },
               { href: '/contact', label: 'KONTAKT' },
-            ].map((item, index) => (
-              <Box
-                key={item.href}
-                component={motion.div}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.5 + index * 0.1 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                sx={{
-                  px: 2,
-                  py: 0.5,
-                  borderRadius: '25px',
-                  '&:hover': {
-                    bgcolor: 'rgba(201, 181, 156, 0.3)',
-                  },
-                  transition: 'background-color 0.3s ease',
-                }}
-              >
-                <Link href={item.href} style={{ textDecoration: 'none' }}>
-                  <Typography sx={navLinkSx}>{item.label}</Typography>
-                </Link>
-              </Box>
-            ))}
+            ].map((item) => {
+              const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+              return (
+                <Box
+                  key={item.href}
+                  component={motion.div}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  sx={{
+                    px: 2,
+                    py: 0.5,
+                    borderRadius: '25px',
+                    bgcolor: isActive ? 'rgba(201, 181, 156, 0.3)' : 'transparent',
+                    '&:hover': {
+                      bgcolor: 'rgba(201, 181, 156, 0.3)',
+                    },
+                    transition: 'background-color 0.3s ease',
+                  }}
+                >
+                  <Link href={item.href} style={{ textDecoration: 'none' }}>
+                    <Typography sx={getNavLinkSx(isActive)}>{item.label}</Typography>
+                  </Link>
+                </Box>
+              );
+            })}
           </Stack>
         </Box>
         
         {/* Social Icons - Desktop */}
         <Box
-          component={motion.div}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
           sx={{ display: { xs: 'none', lg: 'flex' }, ml: 2 }}
         >
           <Stack direction="row" spacing={0.5}>
@@ -236,10 +233,6 @@ export default function Navigation() {
 
       {/* Mobile Menu Button */}
       <Box
-        component={motion.div}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.6 }}
         sx={{ display: { xs: 'block', sm: 'none' } }}
       >
         <IconButton
@@ -327,31 +320,33 @@ export default function Navigation() {
               component={motion.div}
               initial={{ y: 50, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 0.4, delay: 0.1 }}
+              transition={{ duration: 0.2, delay: 0.05 }}
               spacing={4}
               alignItems="center"
               sx={{ mt: 8 }}
             >
               {[
-                { href: '/', label: 'HJEM', delay: 0.2 },
-                { href: '/work', label: 'ARBEID', delay: 0.3 },
-                { href: '/about', label: 'OM MEG', delay: 0.4 },
-                { href: '/contact', label: 'KONTAKT', delay: 0.5 },
-              ].map((item) => (
+                { href: '/', label: 'HJEM', delay: 0.1 },
+                { href: '/work', label: 'ARBEID', delay: 0.15 },
+                { href: '/about', label: 'OM MEG', delay: 0.2 },
+                { href: '/contact', label: 'KONTAKT', delay: 0.25 },
+              ].map((item) => {
+                const isActive = pathname === item.href;
+                return (
                 <Box
                   key={item.href}
                   component={motion.div}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3, delay: item.delay }}
+                  transition={{ duration: 0.2, delay: item.delay }}
                 >
                   <Link href={item.href} onClick={closeMobileMenu} style={{ textDecoration: 'none' }}>
                     <Typography
                       sx={{
                         fontSize: '1.5rem',
-                        fontWeight: 300,
+                        fontWeight: isActive ? 500 : 300,
                         letterSpacing: '0.1em',
-                        color: 'text.primary',
+                        color: isActive ? 'primary.dark' : 'text.primary',
                         '&:hover': { color: 'text.secondary' },
                         transition: 'color 0.2s ease',
                       }}
@@ -360,7 +355,7 @@ export default function Navigation() {
                     </Typography>
                   </Link>
                 </Box>
-              ))}
+              );})}
 
               {/* Mobile Social Icons */}
               <Stack
@@ -369,7 +364,7 @@ export default function Navigation() {
                 spacing={3}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.6 }}
+                transition={{ duration: 0.2, delay: 0.3 }}
                 sx={{ mt: 6 }}
               >
                 {personalInfo.social.linkedin && (

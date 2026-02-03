@@ -41,20 +41,23 @@ export default function Footer() {
               <Stack direction="row" spacing={2} alignItems="center" sx={{ mb: 1 }}>
                 <Box
                   sx={{
-                    width: 40,
-                    height: 40,
+                    width: 50,
+                    height: 50,
                     borderRadius: '50%',
                     overflow: 'hidden',
                     border: '2px solid',
                     borderColor: 'primary.main',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   <Image
                     src="/me/logo.png"
                     alt="Ømer Digital Logo"
-                    width={40}
-                    height={40}
-                    style={{ objectFit: 'cover' }}
+                    width={50}
+                    height={50}
+                    style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                   />
                 </Box>
                 <Typography

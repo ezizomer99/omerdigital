@@ -1,7 +1,6 @@
 'use client';
 
 import Image from "next/image";
-import Navigation from "@/components/Navigation";
 import { personalInfo } from "@/data/personal";
 import { services } from "@/data/services";
 import { 
@@ -20,8 +19,6 @@ import Stack from '@mui/material/Stack';
 export default function About() {
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <Navigation />
-      
       <PageTransition>
         <Container maxWidth="md" sx={{ pt: { xs: 14, md: 16 }, pb: 8 }}>
           <PageTitle delay={0.1}>
@@ -116,7 +113,7 @@ export default function About() {
                       src="/me/profilepic.jpg"
                       alt="Omer Digital - Profile Picture"
                       fill
-                      style={{ objectFit: 'cover' }}
+                      style={{ objectFit: 'cover', filter: 'grayscale(100%)' }}
                       priority
                     />
                   </Box>

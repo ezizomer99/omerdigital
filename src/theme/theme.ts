@@ -17,8 +17,8 @@ const palette = {
     contrastText: "#1f2937",
   },
   background: {
-    default: "#F9F8F6", // off-white
-    paper: "#EFE9E3", // light cream
+    default: "#EFE9E3", // light cream 
+    paper: "#EFE9E3", // off-white
   },
   text: {
     primary: "#1f2937", // dark gray

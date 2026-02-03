@@ -1,7 +1,6 @@
 'use client';
 
 import Image from "next/image";
-import Navigation from "@/components/Navigation";
 import { services } from "@/data/services";
 import { personalInfo } from "@/data/personal";
 import { 
@@ -50,9 +49,6 @@ export default function Home() {
           </Typography>
         </Box>
       </Box>
-
-      {/* Navigation */}
-      <Navigation />
       
       {/* Main Content */}
       <Box
@@ -76,8 +72,8 @@ export default function Home() {
             <FadeIn delay={0.1} duration={0.4}>
               <Box
                 sx={{
-                  width: { xs: 120, md: 160, lg: 200 },
-                  height: { xs: 120, md: 160, lg: 200 },
+                  width: { xs: 160, md: 200, lg: 260 },
+                  height: { xs: 160, md: 200, lg: 260 },
                   borderRadius: '50%',
                   overflow: 'hidden',
                   border: '3px solid',
@@ -90,8 +86,8 @@ export default function Home() {
                 <Image
                   src="/me/logo.png"
                   alt="Ømer Digital Logo"
-                  width={200}
-                  height={200}
+                  width={260}
+                  height={260}
                   style={{ objectFit: 'cover', width: '100%', height: '100%' }}
                   priority
                 />

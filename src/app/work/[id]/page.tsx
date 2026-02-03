@@ -4,7 +4,6 @@ import { use } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import Navigation from "@/components/Navigation";
 import { DesktopFrame, MobileFrame } from "@/components/DeviceFrames";
 import { useProject, useProjectImages, type ProjectImage } from "@/hooks/useProjects";
 import { 
@@ -40,7 +39,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
   if (loading) {
     return (
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-        <Navigation />
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '50vh', pt: { xs: 14, md: 16 } }}>
           <Stack spacing={2} alignItems="center">
             <CircularProgress />
@@ -57,8 +55,6 @@ export default function ProjectPage({ params }: ProjectPageProps) {
 
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
-      <Navigation />
-      
       <PageTransition>
         <Container maxWidth="md" sx={{ pt: { xs: 14, md: 16 }, pb: 8 }}>
           {/* Back Button */}
