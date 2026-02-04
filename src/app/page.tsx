@@ -21,11 +21,11 @@ import Divider from '@mui/material/Divider';
 export default function Home() {
   return (
     <Box sx={{ minHeight: '100vh', bgcolor: 'background.default', position: 'relative', overflow: 'hidden' }}>
-      {/* Top Right Image Placeholder */}
+      {/* Top Right Image */}
       <Box
         sx={{
           position: 'absolute',
-          top: { xs: 16, md: 32 },
+          top: { xs: 80, md: 100 },
           right: { xs: 16, md: 32 },
           zIndex: 0,
         }}
@@ -34,19 +34,19 @@ export default function Home() {
           sx={{
             width: { xs: 128, md: 192, lg: 320 },
             height: { xs: 192, md: 288, lg: 480 },
-            bgcolor: 'grey.600',
             borderRadius: 2,
             boxShadow: 3,
             opacity: 0.4,
             transform: 'rotate(6deg)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            overflow: 'hidden',
           }}
         >
-          <Typography variant="caption" sx={{ color: 'grey.300' }}>
-            Image Placeholder
-          </Typography>
+          <Image
+            src="/me/stock1.png"
+            alt="Decorative image"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
         </Box>
       </Box>
       
@@ -192,7 +192,7 @@ export default function Home() {
         </Box>
       </FadeIn>
 
-      {/* Bottom Left Image Placeholder */}
+      {/* Bottom Left Image */}
       <Box
         sx={{
           position: 'absolute',
@@ -205,19 +205,20 @@ export default function Home() {
           sx={{
             width: { xs: 160, md: 224, lg: 384 },
             height: { xs: 240, md: 336, lg: 512 },
-            bgcolor: 'grey.700',
             borderRadius: 2,
             boxShadow: 3,
             opacity: 0.35,
             transform: 'rotate(-6deg)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            overflow: 'hidden',
+            position: 'relative',
           }}
         >
-          <Typography variant="caption" sx={{ color: 'grey.200' }}>
-            Image Placeholder
-          </Typography>
+          <Image
+            src="/me/stock2.png"
+            alt="Decorative image"
+            fill
+            style={{ objectFit: 'cover' }}
+          />
         </Box>
       </Box>
     </Box>

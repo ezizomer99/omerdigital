@@ -124,29 +124,30 @@ export function useProjectImages(projectId: number) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/projects/${projectId}/images`);
-        if (!response.ok) {
-          throw new Error("Failed to fetch project images");
-        }
-        const data = await response.json();
-        setImages(data);
-        setError(null);
-      } catch (err) {
-        setError("Failed to fetch project images");
-        console.error("Error fetching project images:", err);
-      } finally {
-        setLoading(false);
+  const fetchImages = async () => {
+    if (!projectId) return;
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/projects/${projectId}/images`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch project images");
       }
-    };
+      const data = await response.json();
+      setImages(data);
+      setError(null);
+    } catch (err) {
+      setError("Failed to fetch project images");
+      console.error("Error fetching project images:", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  useEffect(() => {
     if (projectId) {
       fetchImages();
     }
   }, [projectId]);
 
-  return { images, loading, error };
+  return { images, loading, error, refetch: fetchImages };
 }

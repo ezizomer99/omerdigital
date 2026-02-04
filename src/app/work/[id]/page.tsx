@@ -4,8 +4,8 @@ import { use } from 'react';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { DesktopFrame, MobileFrame } from "@/components/DeviceFrames";
-import { useProject, useProjectImages, type ProjectImage } from "@/hooks/useProjects";
+import { DeviceShowcase } from "@/components/DeviceFrames";
+import { useProject, useProjectImages } from "@/hooks/useProjects";
 import { 
   PageTransition,
   PageTitle,
@@ -15,14 +15,12 @@ import {
 } from "@/components/animations";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import CircularProgress from '@mui/material/CircularProgress';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import GitHubIcon from '@mui/icons-material/GitHub';
 
 interface ProjectPageProps {
   params: Promise<{
@@ -171,117 +169,131 @@ export default function ProjectPage({ params }: ProjectPageProps) {
           <FadeIn delay={0.8}>
             <Box sx={{ mb: 6 }}>
               {images.length > 0 ? (
-                <Stack spacing={6}>
-                  {images.map((image, index) => {
-                    const isMobile = image.alt_text?.toLowerCase().includes('mobile') || 
-                                     image.image_url.toLowerCase().includes('mobile') ||
-                                     image.alt_text?.toLowerCase().includes('phone');
+                (() => {
+                  // Find desktop image (not mobile or tablet)
+                  const desktopImages = images.filter(img => 
+                    !img.alt_text?.toLowerCase().includes('mobile') && 
+                    !img.alt_text?.toLowerCase().includes('phone') &&
+                    !img.alt_text?.toLowerCase().includes('tablet') &&
+                    !img.image_url.toLowerCase().includes('mobile') &&
+                    !img.image_url.toLowerCase().includes('tablet')
+                  );
+                  
+                  // Find tablet image
+                  const tabletImages = images.filter(img => 
+                    img.alt_text?.toLowerCase().includes('tablet') ||
+                    img.image_url.toLowerCase().includes('tablet')
+                  );
+                  
+                  // Find mobile image
+                  const mobileImages = images.filter(img => 
+                    img.alt_text?.toLowerCase().includes('mobile') ||
+                    img.alt_text?.toLowerCase().includes('phone') ||
+                    img.image_url.toLowerCase().includes('mobile')
+                  );
 
-                    return (
-                      <FadeIn key={image.id} delay={0.9 + (index * 0.1)}>
-                        <Box sx={{ width: '100%' }}>
-                          {isMobile ? (
-                            <Box sx={{ display: 'flex', justifyContent: 'center' }}>
-                              <MobileFrame>
-                                <Image 
-                                  src={image.image_url} 
-                                  alt={image.alt_text || `${project.title} mobile screenshot`}
-                                  width={400}
-                                  height={800}
-                                  style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
-                                />
-                              </MobileFrame>
-                            </Box>
-                          ) : (
-                            <DesktopFrame>
-                              <Image 
-                                src={image.image_url} 
-                                alt={image.alt_text || `${project.title} desktop screenshot`}
-                                width={1200}
-                                height={800}
-                                style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
-                              />
-                            </DesktopFrame>
-                          )}
-                          
-                          {image.alt_text && (
-                            <Typography
-                              variant="body2"
-                              sx={{ textAlign: 'center', color: 'text.secondary', mt: 2 }}
-                            >
-                              {image.alt_text}
-                            </Typography>
-                          )}
-                        </Box>
-                      </FadeIn>
-                    );
-                  })}
-                </Stack>
+                  const desktopImg = desktopImages[0] || images[0];
+                  const tabletImg = tabletImages[0] || images[0];
+                  const mobileImg = mobileImages[0] || images[0];
+
+                  return (
+                    <DeviceShowcase
+                      desktopImage={
+                        <Image 
+                          src={desktopImg.image_url} 
+                          alt={desktopImg.alt_text || `${project.title} desktop view`}
+                          width={1200}
+                          height={800}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                        />
+                      }
+                      tabletImage={
+                        <Image 
+                          src={tabletImg.image_url} 
+                          alt={tabletImg.alt_text || `${project.title} tablet view`}
+                          width={600}
+                          height={800}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                        />
+                      }
+                      mobileImage={
+                        <Image 
+                          src={mobileImg.image_url} 
+                          alt={mobileImg.alt_text || `${project.title} mobile view`}
+                          width={400}
+                          height={800}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                        />
+                      }
+                    />
+                  );
+                })()
               ) : (
-                <DesktopFrame>
-                  <Box
-                    sx={{
-                      width: '100%',
-                      height: '100%',
-                      background: 'linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}
-                  >
-                    <Box sx={{ textAlign: 'center' }}>
-                      <Typography variant="body1" sx={{ color: 'grey.400', mb: 1 }}>
-                        Prosjektbilde
-                      </Typography>
+                <DeviceShowcase
+                  desktopImage={
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
                       <Typography variant="body2" sx={{ color: 'grey.400' }}>
-                        Skjermbilder vil bli lagt til her
+                        Desktop
                       </Typography>
                     </Box>
-                  </Box>
-                </DesktopFrame>
+                  }
+                  tabletImage={
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ color: 'grey.400' }}>
+                        Tablet
+                      </Typography>
+                    </Box>
+                  }
+                  mobileImage={
+                    <Box
+                      sx={{
+                        width: '100%',
+                        height: '100%',
+                        background: 'linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <Typography variant="body2" sx={{ color: 'grey.400' }}>
+                        Mobil
+                      </Typography>
+                    </Box>
+                  }
+                />
               )}
             </Box>
           </FadeIn>
 
           {/* Project Details Section */}
           <FadeIn delay={0.9}>
-            <Grid container spacing={6}>
-              <Grid size={{ xs: 12, md: 6 }}>
                 <Typography variant="h5" sx={{ fontWeight: 300, color: 'text.primary', mb: 2 }}>
-                  Utfordringer
-                </Typography>
-                <Typography sx={{ color: 'text.secondary', lineHeight: 1.75 }}>
-                  {project.long_description || 
-                   `Dette prosjektet krevde en balanse mellom moderne design og funksjonalitet. 
-                    Hovedutfordringen var å skape en løsning som både er visuelt tiltalende og 
-                    teknisk robust.`}
-                </Typography>
-              </Grid>
-              <Grid size={{ xs: 12, md: 6 }}>
-                <Typography variant="h5" sx={{ fontWeight: 300, color: 'text.primary', mb: 2 }}>
-                  Løsning
+                  Beskrivelse
                 </Typography>
                 <Typography sx={{ color: 'text.secondary', lineHeight: 1.75, mb: 2 }}>
-                  Ved å bruke moderne webutvikling teknologier og fokus på brukeropplevelse, 
-                  leverte vi en komplett løsning som møter alle krav til ytelse og design.
+                  En moderne og brukervennlig nettside for Farsund Grappling Club, en brasiliansk jiu-jitsu klubb i Farsund.
+                  Nettsiden gir klubben en profesjonell tilstedeværelse på nett hvor besøkende enkelt kan finne informasjon om treninger, se hvem instruktørene er, og lese om medlemskap og priser.
+                  Klubbens ledere kan selv oppdatere innholdet på nettsiden – som treningstider, nyheter og instruktørprofiler – uten teknisk kunnskap. Alt administreres gjennom et enkelt innloggingspanel.
+                  Nettsiden er designet for å fungere like godt på mobil som på PC, med raske lastetider og et rent, moderne utseende som reflekterer klubbens identitet.
                 </Typography>
-                {project.github_url && (
-                  <AnimatedLink href={project.github_url} external={true}>
-                    <Button
-                      variant="outlined"
-                      startIcon={<GitHubIcon />}
-                      sx={{
-                        color: 'text.primary',
-                        borderColor: 'grey.300',
-                        '&:hover': { borderColor: 'grey.400', bgcolor: 'transparent' },
-                      }}
-                    >
-                      Se kildekode
-                    </Button>
-                  </AnimatedLink>
-                )}
-              </Grid>
-            </Grid>
           </FadeIn>
         </Container>
       </PageTransition>

@@ -71,8 +71,29 @@ export default function Navigation() {
     },
   };
 
-  // Only apply scroll effects after mounting to prevent hydration mismatch
-  const isScrolled = mounted && scrolled;
+  // Don't render until mounted to prevent hydration mismatch
+  if (!mounted) {
+    return (
+      <Box
+        component="nav"
+        sx={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 1000,
+          width: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          py: 3,
+          px: { xs: 2, md: 6 },
+          bgcolor: 'transparent',
+          transition: 'all 0.3s ease',
+        }}
+      />
+    );
+  }
 
   return (
     <Box
@@ -87,11 +108,11 @@ export default function Navigation() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        py: isScrolled ? 2 : 3,
+        py: scrolled ? 2 : 3,
         px: { xs: 2, md: 6 },
-        bgcolor: isScrolled ? 'rgba(249, 248, 246, 0.95)' : 'transparent',
-        backdropFilter: isScrolled ? 'blur(10px)' : 'none',
-        borderBottom: isScrolled ? '1px solid' : 'none',
+        bgcolor: scrolled ? 'rgba(249, 248, 246, 0.95)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(10px)' : 'none',
+        borderBottom: scrolled ? '1px solid' : 'none',
         borderColor: 'rgba(201, 181, 156, 0.2)',
         transition: 'all 0.3s ease',
       }}
