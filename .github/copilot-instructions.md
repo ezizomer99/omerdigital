@@ -56,6 +56,7 @@ MONGODB_URI=           # MongoDB connection string
 BLOB_READ_WRITE_TOKEN= # Vercel Blob storage token
 GMAIL_USER=            # Gmail for contact form
 GMAIL_APP_PASSWORD=    # Gmail app password
+ADMIN_PASSWORD=        # Password to access /admin area
 ```
 
 ## Key Commands

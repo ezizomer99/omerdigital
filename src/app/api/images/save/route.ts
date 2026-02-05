@@ -1,8 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { ProjectService } from "@/services/projectService";
+import { isAdminAuthenticatedFromRequest } from "@/lib/adminAuth";
 
 // POST - Save an uploaded image reference to MongoDB
-export async function POST(request: Request): Promise<NextResponse> {
+export async function POST(request: NextRequest): Promise<NextResponse> {
+  // Check admin authentication
+  if (!isAdminAuthenticatedFromRequest(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { projectId, imageUrl, altText } = body;

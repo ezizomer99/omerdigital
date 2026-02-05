@@ -73,26 +73,7 @@ export default function Navigation() {
 
   // Don't render until mounted to prevent hydration mismatch
   if (!mounted) {
-    return (
-      <Box
-        component="nav"
-        sx={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          zIndex: 1000,
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          py: 3,
-          px: { xs: 2, md: 6 },
-          bgcolor: 'transparent',
-          transition: 'all 0.3s ease',
-        }}
-      />
-    );
+    return null;
   }
 
   return (

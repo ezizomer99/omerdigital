@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ProjectService } from "@/services/projectService";
 import { put } from "@vercel/blob";
+import { isAdminAuthenticatedFromRequest } from "@/lib/adminAuth";
 
 interface Params {
   params: Promise<{
@@ -33,6 +34,11 @@ export async function GET(request: NextRequest, { params }: Params) {
 
 // POST - Upload a new image to Vercel Blob and save reference to MongoDB
 export async function POST(request: NextRequest, { params }: Params) {
+  // Check admin authentication
+  if (!isAdminAuthenticatedFromRequest(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   try {
     const resolvedParams = await params;
     const projectId = parseInt(resolvedParams.id);
