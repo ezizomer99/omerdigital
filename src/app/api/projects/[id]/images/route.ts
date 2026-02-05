@@ -1,11 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { ProjectService } from "@/services/projectService";
-<<<<<<< Updated upstream
-import { put } from "@vercel/blob";
 import { isAdminAuthenticatedFromRequest } from "@/lib/adminAuth";
-=======
 import { put, del } from "@vercel/blob";
->>>>>>> Stashed changes
 
 interface Params {
   params: Promise<{
