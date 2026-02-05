@@ -230,4 +230,16 @@ export class ProjectService {
       return null;
     }
   }
+
+  // Delete a project image
+  static async deleteProjectImage(projectId: number, imageId: number): Promise<boolean> {
+    try {
+      await connectToDatabase();
+      const result = await ProjectImageModel.deleteOne({ project_id: projectId, id: imageId });
+      return result.deletedCount > 0;
+    } catch (error) {
+      console.error("Error in deleteProjectImage:", error);
+      return false;
+    }
+  }
 }

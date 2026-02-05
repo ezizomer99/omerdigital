@@ -211,8 +211,9 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                         <Image 
                           src={tabletImg.image_url} 
                           alt={tabletImg.alt_text || `${project.title} tablet view`}
-                          width={600}
-                          height={800}
+                          width={800}
+                          height={1100}
+                          unoptimized
                           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                         />
                       }
@@ -220,8 +221,9 @@ export default function ProjectPage({ params }: ProjectPageProps) {
                         <Image 
                           src={mobileImg.image_url} 
                           alt={mobileImg.alt_text || `${project.title} mobile view`}
-                          width={400}
-                          height={800}
+                          width={600}
+                          height={1200}
+                          unoptimized
                           style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
                         />
                       }

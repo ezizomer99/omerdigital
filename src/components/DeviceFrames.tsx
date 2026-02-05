@@ -204,8 +204,9 @@ export function MobileFrame({ children }: DeviceFrameProps) {
           left: '7.9%',
           width: '84.3%',
           height: '92.4%',
-          borderRadius: '28px',
+          borderRadius: '11.4%',
           overflow: 'hidden',
+          bgcolor: '#0d0d0d',
         }}
       >
         {children}
@@ -301,8 +302,9 @@ export function TabletFrame({ children }: DeviceFrameProps) {
           left: '5.7%',
           width: '88.6%',
           height: '91.7%',
-          borderRadius: '12px',
+          borderRadius: '3.8%',
           overflow: 'hidden',
+          bgcolor: '#0d0d0d',
         }}
       >
         {children}

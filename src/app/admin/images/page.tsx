@@ -20,7 +20,14 @@ import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import LinearProgress from '@mui/material/LinearProgress';
 import Chip from '@mui/material/Chip';
+import IconButton from '@mui/material/IconButton';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogActions from '@mui/material/DialogActions';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export default function AdminImagesPage() {
   const { projects, loading: projectsLoading } = useProjects();
@@ -34,6 +41,8 @@ export default function AdminImagesPage() {
   const [altText, setAltText] = useState('');
   const [selectedFileName, setSelectedFileName] = useState<string | null>(null);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [deleteDialog, setDeleteDialog] = useState<{ open: boolean; imageId: number | null; imageUrl: string | null }>({ open: false, imageId: null, imageUrl: null });
+  const [deleting, setDeleting] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,6 +121,49 @@ export default function AdminImagesPage() {
       setUploading(false);
       setUploadProgress(0);
     }
+  };
+
+  const handleDeleteClick = (imageId: number, imageUrl: string) => {
+    setDeleteDialog({ open: true, imageId, imageUrl });
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (deleteDialog.imageId === null || selectedProjectId === '') return;
+
+    setDeleting(true);
+    setMessage(null);
+
+    try {
+      const params = new URLSearchParams({
+        imageId: deleteDialog.imageId.toString(),
+        imageUrl: deleteDialog.imageUrl || '',
+      });
+
+      const response = await fetch(
+        `/api/projects/${selectedProjectId}/images?${params.toString()}`,
+        { method: 'DELETE' }
+      );
+
+      if (!response.ok) {
+        throw new Error('Kunne ikke slette bildet');
+      }
+
+      setMessage({ type: 'success', text: 'Bildet ble slettet!' });
+      refetch();
+    } catch (error) {
+      console.error('Delete error:', error);
+      setMessage({
+        type: 'error',
+        text: error instanceof Error ? error.message : 'Sletting feilet',
+      });
+    } finally {
+      setDeleting(false);
+      setDeleteDialog({ open: false, imageId: null, imageUrl: null });
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialog({ open: false, imageId: null, imageUrl: null });
   };
 
   return (
@@ -239,12 +291,25 @@ export default function AdminImagesPage() {
                       sx={{ objectFit: 'cover' }}
                     />
                     <CardContent>
-                      <Typography variant="caption" color="text.secondary" display="block">
-                        ID: {image.id} | Order: {image.order_index}
-                      </Typography>
-                      <Typography variant="body2" sx={{ mt: 1 }}>
-                        {image.alt_text || 'Ingen beskrivelse'}
-                      </Typography>
+                      <Stack direction="row" justifyContent="space-between" alignItems="flex-start">
+                        <Box>
+                          <Typography variant="caption" color="text.secondary" display="block">
+                            ID: {image.id} | Order: {image.order_index}
+                          </Typography>
+                          <Typography variant="body2" sx={{ mt: 1 }}>
+                            {image.alt_text || 'Ingen beskrivelse'}
+                          </Typography>
+                        </Box>
+                        <IconButton
+                          size="small"
+                          color="error"
+                          onClick={() => handleDeleteClick(image.id, image.image_url)}
+                          disabled={deleting}
+                          sx={{ ml: 1 }}
+                        >
+                          <DeleteIcon fontSize="small" />
+                        </IconButton>
+                      </Stack>
                       <Stack direction="row" spacing={1} sx={{ mt: 1 }}>
                         {image.alt_text?.toLowerCase().includes('mobile') && (
                           <Chip label="Mobile" size="small" color="primary" />
@@ -287,6 +352,30 @@ export default function AdminImagesPage() {
           </Typography>
         </Card>
       </Container>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteDialog.open} onClose={handleDeleteCancel}>
+        <DialogTitle>Slett bilde</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Er du sikker på at du vil slette dette bildet? Denne handlingen kan ikke angres.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} disabled={deleting}>
+            Avbryt
+          </Button>
+          <Button 
+            onClick={handleDeleteConfirm} 
+            color="error" 
+            variant="contained"
+            disabled={deleting}
+            startIcon={deleting ? <CircularProgress size={16} /> : <DeleteIcon />}
+          >
+            {deleting ? 'Sletter...' : 'Slett'}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 }
