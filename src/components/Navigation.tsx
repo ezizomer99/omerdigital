@@ -31,6 +31,35 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.overflow = 'hidden';
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.overflow = '';
+      if (scrollY) {
+        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      }
+    }
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -235,7 +264,7 @@ export default function Navigation() {
 
       {/* Mobile Menu Button */}
       <Box
-        sx={{ display: { xs: 'block', sm: 'none' } }}
+        sx={{ display: { xs: isMobileMenuOpen ? 'none' : 'block', sm: 'none' }, zIndex: 1002, position: 'relative' }}
       >
         <IconButton
           component={motion.button}
@@ -267,8 +296,10 @@ export default function Navigation() {
               position: 'fixed',
               inset: 0,
               bgcolor: 'background.default',
-              zIndex: 50,
+              zIndex: 1001,
               display: { xs: 'block', sm: 'none' },
+              overflow: 'hidden',
+              touchAction: 'none',
             }}
           >
             {/* Mobile Menu Header */}
